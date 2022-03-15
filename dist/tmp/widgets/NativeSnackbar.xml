@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="incentro.nativesnackbar.NativeSnackbar" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Native"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Native Snackbar</name>
+    <description>UI pattern from Material design. Snackbars provide brief messages about app processes at the bottom of the screen.</description>
+    <icon>iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAAEEfUpiAAAACXBIWXMAAAsSAAALEgHS3X78AAABcElEQVRYhe2XQWqDUBCGfyVLF+0uy4IXKG+bRQl4gOAFqisP4AHEA3gAV7UXCB4gULrISnjUAwg5gdm4t4zkiTGmyTMxoa0fyBufb2Z8w5txRBuF7hljH/U8Y6zM87y0bbtMkqQ8UDm0sacPbBTSJ8kwjNPqR23+6Frtafia0EtaAF67bHLO5+ftYrVa1ZcgDMNKOmnhL0CbfANg9d2MKqtM4RUhRp8wa5pWjUVRVOMEwCOA7bkGhOKOLxnnI0MhyiGdxidJH++c8+jSfI0urWuWlAHKgel02p0LzXrUpFnVKQ/iOMZisaiPtFQMZrMZ1us1TNPEcrmUN9CFemFGUSaPjPx7KBMfAFB793zjYFACzycy39QrQxveDtpnUvETnQSNVATbTNoTx8ryMVzXRZqmnU9pPggC6LqOLMuqtW0GbUHFh8fzPPi+X8mO4+ytuXsPTGcguqP/SBHS7ofjpUd7IssGwCe1NAP7GfkNAPgGq0p4s4v6UXUAAAAASUVORK5CYII=</icon>
+    <properties>
+        <propertyGroup caption="General">
+            <property key="textLabel" type="expression" required="true">
+                <caption>Text label</caption>
+                <description>Label to display inside the snackbar.</description>
+                <returnType type="String" />
+            </property>
+            <property key="openSnackbar" type="attribute" required="true">
+                <caption>Open Snackbar</caption>
+                <description>Boolean which trigger the opening of the snackbar</description>
+                <attributeTypes>
+                    <attributeType name="Boolean"/>
+                </attributeTypes>
+            </property>
+            <property key="autoClose" type="integer" defaultValue="5">
+                <caption>Autoclose</caption>
+                <description>Autoclose after given amount of seconds</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Actions">
+            <property key="action" type="action" required="false">
+                <caption>Action</caption>
+                <description>Optional action.</description>
+            </property>
+            <property key="actionColor" type="expression" required="true" defaultValue="'#ffffff'">
+                <caption>Action color</caption>
+                <description>display the action in this color.</description>
+                <returnType type="String" />
+            </property>
+            <property key="buttonLabel" type="string" required="false" defaultValue="Action">
+                <caption>Button label</caption>
+                <description>Label to display for the action.</description>
+            </property>
+            <property key="canBeClosed" type="boolean" defaultValue="true">
+                <caption>May be closed?</caption>
+                <description>Display a close button inside the snackbar. This also sets Open snackbar boolean to false.</description>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>

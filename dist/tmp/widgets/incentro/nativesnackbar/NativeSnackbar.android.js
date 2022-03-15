@@ -1,0 +1,267 @@
+import { Animated, View, Text, Button, TouchableHighlight, Image } from 'react-native';
+import { useState, useEffect, createElement } from 'react';
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+var dist = {};
+
+var common$2 = {};
+
+Object.defineProperty(common$2, "__esModule", {
+  value: true
+});
+common$2.ensure = void 0;
+
+function ensure(arg) {
+  if (arg == null) {
+    throw new Error("Did not expect an argument to be undefined");
+  }
+
+  return arg;
+}
+
+common$2.ensure = ensure;
+
+var common$1 = {};
+
+Object.defineProperty(common$1, "__esModule", {
+  value: true
+});
+common$1.extractStyles = common$1.mergeNativeStyles = void 0;
+
+function mergeNativeStyles(defaultStyle, overrideStyles) {
+  const styles = [defaultStyle, ...overrideStyles.filter(object => object !== undefined)];
+  return Object.keys(defaultStyle).reduce((flattened, currentKey) => {
+    const styleItems = styles.map(object => object[currentKey]);
+    return Object.assign(Object.assign({}, flattened), {
+      [currentKey]: flattenObjects(styleItems)
+    });
+  }, {});
+}
+
+common$1.mergeNativeStyles = mergeNativeStyles;
+
+function flattenObjects(objects) {
+  return objects.reduce((merged, object) => Object.assign(Object.assign({}, merged), object), {});
+}
+
+function extractStyles(source, extractionKeys) {
+  if (!source) {
+    return [{}, {}];
+  }
+
+  return Object.entries(source).reduce(([extracted, rest], [key, value]) => {
+    if (extractionKeys.includes(key)) {
+      extracted[key] = value;
+    } else {
+      rest[key] = value;
+    }
+
+    return [extracted, rest];
+  }, [{}, {}]);
+}
+
+common$1.extractStyles = extractStyles;
+
+var common = {};
+
+Object.defineProperty(common, "__esModule", {
+  value: true
+});
+common.parseInlineStyle = void 0;
+
+function parseInlineStyle(style = "") {
+  try {
+    return style.split(";").reduce((styleObject, line) => {
+      const pair = line.split(":");
+
+      if (pair.length === 2) {
+        const name = pair[0].trim().replace(/(-.)/g, match => match[1].toUpperCase());
+        styleObject[name] = pair[1].trim();
+      }
+
+      return styleObject;
+    }, {});
+  } catch (_) {
+    return {};
+  }
+}
+
+common.parseInlineStyle = parseInlineStyle;
+
+(function (exports) {
+
+var __createBinding = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  Object.defineProperty(o, k2, {
+    enumerable: true,
+    get: function () {
+      return m[k];
+    }
+  });
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __exportStar = commonjsGlobal && commonjsGlobal.__exportStar || function (m, exports) {
+  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__exportStar(common$2, exports);
+
+__exportStar(common$1, exports);
+
+__exportStar(common, exports);
+}(dist));
+
+const dropshadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 1
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 3
+};
+const defaultStyle = {
+  animated: {},
+  container: { ...dropshadow,
+    alignItems: "center",
+    backgroundColor: "#323232",
+    borderRadius: 4,
+    bottom: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    position: "absolute",
+    zIndex: 8
+  },
+  label: {
+    color: "#eeeeee",
+    flex: 1,
+    size: 14,
+    paddingHorizontal: 8,
+    paddingVertical: 4
+  },
+  actions: {
+    alignItems: "center",
+    flexDirection: "row"
+  },
+  closeButton: {
+    borderRadius: 50,
+    margin: 9
+  },
+  closeImage: {
+    height: 36,
+    width: 36
+  }
+};
+function NativeSnackbar({
+  action,
+  actionColor,
+  autoClose,
+  buttonLabel,
+  canBeClosed,
+  openSnackbar,
+  textLabel,
+  style
+}) {
+  const styles = dist.mergeNativeStyles(defaultStyle, style);
+  const [display, setDisplay] = useState(false);
+  const closeImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAAGWB6gOAAAACXBIWXMAAAsSAAALEgHS3X78AAAAzklEQVRYhe2X2w3DIAxF7U7QbJARunFG6Qh0hI7QDW6FZFqEWiCO8lB0z1dCiG0wtrHMBwAcv/UDIKyqoIdoxOor3QUAVwBTVXeaECefbwsOT37yoiua/qphAuD2pZ2YUIydMDYIcWHl4hOki8LDhN0XBW1uSU9FvbSEiMggIg93eS6XY3lpdAkjhBDSnXxHS8B/b5Kp5/HUnGr5+IWqPq2k3ErD0o3VXgdVfc2Vv4jUI+FL2LUVyowJxfO2RtWU59+2NKi5A+xiCTkkIvIGBjfr3SA9zPQAAAAASUVORK5CYII=`;
+  const opacity = useState(new Animated.Value(0))[0];
+  const scale = useState(new Animated.Value(0))[0];
+
+  function onclickAction() {
+    action.execute();
+  }
+
+  function closeSnackbar() {
+    popOut();
+    setTimeout(() => {
+      setDisplay(false);
+      openSnackbar.setValue(false);
+    }, 300);
+  }
+
+  function popIn() {
+    Animated.parallel([Animated.timing(opacity, {
+      toValue: 1,
+      duration: 150,
+      useNativeDriver: true
+    }), Animated.timing(scale, {
+      toValue: 1,
+      duration: 150,
+      useNativeDriver: true
+    })]).start();
+  }
+
+  function popOut() {
+    Animated.parallel([Animated.timing(opacity, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true
+    }), Animated.timing(scale, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true
+    })]).start();
+  }
+
+  useEffect(() => {
+    if (openSnackbar.value === true) {
+      const timer = setTimeout(() => closeSnackbar(), autoClose * 1000);
+      return () => clearTimeout(timer);
+    } else {
+      return null;
+    }
+  });
+  useEffect(() => {
+    if (openSnackbar.value === true) {
+      setDisplay(true);
+    }
+
+    if (openSnackbar.value === false) {
+      setDisplay(false);
+    }
+  }, [openSnackbar.value]);
+
+  if (textLabel.status === "available" && display === true) {
+    popIn();
+    return createElement(Animated.View, {
+      style: [styles.animated, opacity, {
+        transform: [{
+          scale: scale
+        }]
+      }]
+    }, createElement(View, {
+      style: styles.container
+    }, createElement(Text, {
+      style: styles.label
+    }, textLabel.value), createElement(View, {
+      style: styles.actions
+    }, action && action.canExecute && createElement(Button, {
+      color: actionColor.value,
+      title: buttonLabel,
+      onPress: onclickAction
+    }, buttonLabel), canBeClosed === true && createElement(TouchableHighlight, {
+      style: styles.closeButton,
+      underlayColor: "#424242",
+      onPress: closeSnackbar
+    }, createElement(Image, {
+      style: styles.closeImage,
+      source: {
+        uri: closeImage
+      }
+    })))));
+  } else {
+    return null;
+  }
+}
+
+export { NativeSnackbar, dropshadow };

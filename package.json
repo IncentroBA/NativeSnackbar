@@ -1,0 +1,30 @@
+{
+  "name": "nativesnackbar",
+  "widgetName": "NativeSnackbar",
+  "version": "1.0.0",
+  "description": "UI pattern from Material design. Snackbars provide brief messages about app processes at the bottom of the screen.",
+  "copyright": "2022 Incentro",
+  "author": "Rob Duits",
+  "engines": {
+    "node": ">=12"
+  },
+  "license": "MIT",
+  "config": {
+    "projectPath": "../../"
+  },
+  "packagePath": "incentro",
+  "scripts": {
+    "start": "pluggable-widgets-tools start:native",
+    "build": "pluggable-widgets-tools build:native",
+    "lint": "pluggable-widgets-tools lint",
+    "lint:fix": "pluggable-widgets-tools lint:fix",
+    "prerelease": "npm run lint",
+    "release": "pluggable-widgets-tools release:native"
+  },
+  "devDependencies": {
+    "@mendix/pluggable-widgets-tools": "^9.0.0"
+  },
+  "dependencies": {
+
+  }
+}
