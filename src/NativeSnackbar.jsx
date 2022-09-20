@@ -1,6 +1,5 @@
 import { Animated, Button, Image, Text, TouchableHighlight, View } from "react-native";
 import { createElement, useEffect, useState } from "react";
-import { mergeNativeStyles } from "@mendix/pluggable-widgets-tools";
 
 export const dropshadow = {
     shadowColor: "#000",
@@ -44,17 +43,8 @@ const defaultStyle = {
     }
 };
 
-export function NativeSnackbar({
-    action,
-    actionColor,
-    autoClose,
-    buttonLabel,
-    canBeClosed,
-    openSnackbar,
-    textLabel,
-    style
-}) {
-    const styles = mergeNativeStyles(defaultStyle, style);
+export function NativeSnackbar({ action, actionColor, autoClose, buttonLabel, canBeClosed, openSnackbar, textLabel }) {
+    const styles = defaultStyle;
     const [display, setDisplay] = useState(false);
     const closeImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAAGWB6gOAAAACXBIWXMAAAsSAAALEgHS3X78AAAAzklEQVRYhe2X2w3DIAxF7U7QbJARunFG6Qh0hI7QDW6FZFqEWiCO8lB0z1dCiG0wtrHMBwAcv/UDIKyqoIdoxOor3QUAVwBTVXeaECefbwsOT37yoiua/qphAuD2pZ2YUIydMDYIcWHl4hOki8LDhN0XBW1uSU9FvbSEiMggIg93eS6XY3lpdAkjhBDSnXxHS8B/b5Kp5/HUnGr5+IWqPq2k3ErD0o3VXgdVfc2Vv4jUI+FL2LUVyowJxfO2RtWU59+2NKi5A+xiCTkkIvIGBjfr3SA9zPQAAAAASUVORK5CYII=`;
     const opacity = useState(new Animated.Value(0))[0];

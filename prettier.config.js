@@ -1,6 +1,6 @@
-const base = require("@mendix/pluggable-widgets-tools/configs/prettier.base.json");
+import base from "@mendix/pluggable-widgets-tools/configs/prettier.base.json";
 
-module.exports = {
+export default {
     ...base,
     plugins: [require.resolve("@prettier/plugin-xml")],
 };

@@ -1,124 +1,6 @@
 import { Animated, View, Text, Button, TouchableHighlight, Image } from 'react-native';
 import { useState, useEffect, createElement } from 'react';
 
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-var dist = {};
-
-var common$2 = {};
-
-Object.defineProperty(common$2, "__esModule", {
-  value: true
-});
-common$2.ensure = void 0;
-
-function ensure(arg) {
-  if (arg == null) {
-    throw new Error("Did not expect an argument to be undefined");
-  }
-
-  return arg;
-}
-
-common$2.ensure = ensure;
-
-var common$1 = {};
-
-Object.defineProperty(common$1, "__esModule", {
-  value: true
-});
-common$1.extractStyles = common$1.mergeNativeStyles = void 0;
-
-function mergeNativeStyles(defaultStyle, overrideStyles) {
-  const styles = [defaultStyle, ...overrideStyles.filter(object => object !== undefined)];
-  return Object.keys(defaultStyle).reduce((flattened, currentKey) => {
-    const styleItems = styles.map(object => object[currentKey]);
-    return Object.assign(Object.assign({}, flattened), {
-      [currentKey]: flattenObjects(styleItems)
-    });
-  }, {});
-}
-
-common$1.mergeNativeStyles = mergeNativeStyles;
-
-function flattenObjects(objects) {
-  return objects.reduce((merged, object) => Object.assign(Object.assign({}, merged), object), {});
-}
-
-function extractStyles(source, extractionKeys) {
-  if (!source) {
-    return [{}, {}];
-  }
-
-  return Object.entries(source).reduce(([extracted, rest], [key, value]) => {
-    if (extractionKeys.includes(key)) {
-      extracted[key] = value;
-    } else {
-      rest[key] = value;
-    }
-
-    return [extracted, rest];
-  }, [{}, {}]);
-}
-
-common$1.extractStyles = extractStyles;
-
-var common = {};
-
-Object.defineProperty(common, "__esModule", {
-  value: true
-});
-common.parseInlineStyle = void 0;
-
-function parseInlineStyle(style = "") {
-  try {
-    return style.split(";").reduce((styleObject, line) => {
-      const pair = line.split(":");
-
-      if (pair.length === 2) {
-        const name = pair[0].trim().replace(/(-.)/g, match => match[1].toUpperCase());
-        styleObject[name] = pair[1].trim();
-      }
-
-      return styleObject;
-    }, {});
-  } catch (_) {
-    return {};
-  }
-}
-
-common.parseInlineStyle = parseInlineStyle;
-
-(function (exports) {
-
-var __createBinding = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  Object.defineProperty(o, k2, {
-    enumerable: true,
-    get: function () {
-      return m[k];
-    }
-  });
-} : function (o, m, k, k2) {
-  if (k2 === undefined) k2 = k;
-  o[k2] = m[k];
-});
-
-var __exportStar = commonjsGlobal && commonjsGlobal.__exportStar || function (m, exports) {
-  for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-__exportStar(common$2, exports);
-
-__exportStar(common$1, exports);
-
-__exportStar(common, exports);
-}(dist));
-
 const dropshadow = {
   shadowColor: "#000",
   shadowOffset: {
@@ -168,10 +50,9 @@ function NativeSnackbar({
   buttonLabel,
   canBeClosed,
   openSnackbar,
-  textLabel,
-  style
+  textLabel
 }) {
-  const styles = dist.mergeNativeStyles(defaultStyle, style);
+  const styles = defaultStyle;
   const [display, setDisplay] = useState(false);
   const closeImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAAGWB6gOAAAACXBIWXMAAAsSAAALEgHS3X78AAAAzklEQVRYhe2X2w3DIAxF7U7QbJARunFG6Qh0hI7QDW6FZFqEWiCO8lB0z1dCiG0wtrHMBwAcv/UDIKyqoIdoxOor3QUAVwBTVXeaECefbwsOT37yoiua/qphAuD2pZ2YUIydMDYIcWHl4hOki8LDhN0XBW1uSU9FvbSEiMggIg93eS6XY3lpdAkjhBDSnXxHS8B/b5Kp5/HUnGr5+IWqPq2k3ErD0o3VXgdVfc2Vv4jUI+FL2LUVyowJxfO2RtWU59+2NKi5A+xiCTkkIvIGBjfr3SA9zPQAAAAASUVORK5CYII=`;
   const opacity = useState(new Animated.Value(0))[0];
